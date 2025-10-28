@@ -1,0 +1,43 @@
+# Visual Studio cache/options directory
+.vs/
+
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code settings
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+
+# DotCover
+.idea/
+*.dotCover
+
+# Rider
+.idea/
+*.sln.iml
+
+# Backup & log files
+*.log
+*.tlog
+*.backup
+*.bak
+
+# Others
+Thumbs.db
+*.DS_Store
