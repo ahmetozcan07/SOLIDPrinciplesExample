@@ -20,11 +20,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.MapGet("/", context =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
 
 app.UseAuthorization();
 app.MapControllers();
