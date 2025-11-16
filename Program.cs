@@ -1,18 +1,27 @@
+using SOLIDPrinciples.Factories;
 using SOLIDPrinciples.Interfaces;
 using SOLIDPrinciples.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddControllers();
+                                     
+                                  // to show enum parameters in swagger dropdown
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddSingleton<IDiscountStrategy>(new PercentageDiscount(10));
-builder.Services.AddSingleton<IReadableProductService, ProductService>();
-builder.Services.AddSingleton<IWritableProductService, ProductService>();
+builder.Services.AddSingleton<IDiscountStrategy>(new NoDiscount());
+builder.Services.AddSingleton<DiscountFactory>();
+builder.Services.AddSingleton<ProductService>();
+builder.Services.AddSingleton<IReadableProductService>(sp => sp.GetRequiredService<ProductService>());
+builder.Services.AddSingleton<IWritableProductService>(sp => sp.GetRequiredService<ProductService>());
+
 
 var app = builder.Build();
 

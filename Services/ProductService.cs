@@ -5,10 +5,15 @@ namespace SOLIDPrinciples.Services
 {
     public class ProductService : IReadableProductService, IWritableProductService
     {
-        private readonly List<Product> _products = new();
-        private readonly IDiscountStrategy _discountStrategy;
+        public List<Product> _products = new();
+        private IDiscountStrategy _discountStrategy;
 
         public ProductService(IDiscountStrategy discountStrategy)
+        {
+            _discountStrategy = discountStrategy;
+        }
+
+        public void SetDiscountStrategy(IDiscountStrategy discountStrategy)
         {
             _discountStrategy = discountStrategy;
         }
@@ -30,6 +35,8 @@ namespace SOLIDPrinciples.Services
 
         public void Add(Product product)
         {
+            if (_products.Any(p => p.Id == product.Id))
+                throw new Exception($"Product with ID {product.Id} already exists!");
             _products.Add(product);
         }
 
